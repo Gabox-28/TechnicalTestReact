@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import {useContext, useEffect} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../Context'
 import Layout from '../../Components/Layout'
@@ -10,6 +10,14 @@ function MyOrder() {
   const currentPath = window.location.pathname
   let index = currentPath.substring(currentPath.lastIndexOf('/') + 1)
   if (index === 'last') index = context.order?.length - 1
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!context.isSignIn){
+      navigate('/sign-in')
+    }
+  }, []);
 
   return (
     <Layout>

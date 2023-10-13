@@ -1,11 +1,19 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import {useContext, useEffect} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import Layout from '../../Components/Layout'
 import { ShoppingCartContext } from '../../Context'
 import OrdersCard from '../../Components/OrdersCard'
 
 function MyOrders() {
   const context = useContext(ShoppingCartContext)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!context.isSignIn){
+      navigate('/sign-in')
+    }
+  }, []);
 
   return (
     <Layout>

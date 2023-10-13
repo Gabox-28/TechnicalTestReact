@@ -1,13 +1,24 @@
 import Layout from '../../Components/Layout'
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {ShoppingCartContext} from "../../Context/index.jsx";
 
 function MyAccount() {
+  const context = useContext(ShoppingCartContext)
   const [isEdit, setIsEdit] = useState(false)
 
   const [newName, setNewName] = useState(null)
   const [newEmail, setNewEmail] = useState(null)
   const [newPassword, setNewPassword] = useState(null)
   const account = JSON.parse(localStorage.getItem('account'))
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!context.isSignIn){
+      navigate('/sign-in')
+    }
+  }, []);
 
   useEffect(() => {
     if(account){
