@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import {useContext, useEffect, useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../Context'
@@ -6,6 +6,23 @@ import { ShoppingCartContext } from '../../Context'
 const Navbar = () => {
   const context = useContext(ShoppingCartContext)
   const activeStyle = 'underline underline-offset-4'
+
+  const [isSignIn, setIsSignIn] = useState(false)
+
+  useEffect(() => {
+    setIsSignIn(JSON.parse(localStorage.getItem('isSignIn')))
+  }, [isSignIn]);
+
+  function RenderSignButton(){
+    if(isSignIn){
+      console.log(isSignIn)
+      return('Sign In')
+    }else{
+      console.log('hola')
+      return('Sign Out')
+    }
+
+  }
 
   return (
     <nav className='flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light'>
@@ -103,8 +120,8 @@ const Navbar = () => {
             to='/sign-in'
             className={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>
-            Sign In
+            } onClick={() => {setIsSignIn(!isSignIn)}}>
+            {RenderSignButton()}
           </NavLink>
         </li>
         <li className='flex items-center'>
