@@ -1,8 +1,11 @@
 import Layout from '../../Components/Layout'
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import {ShoppingCartContext} from "../../Context/index.jsx";
 
 function SignIn() {
+  const context = useContext(ShoppingCartContext)
+
   const [isLogin, setIsLogin] = useState(false)
   const [isSignUpBtnClicked, setIsSignUpBtnClicked] = useState(false)
   const [newName, setNewName] = useState(null)
@@ -18,6 +21,7 @@ function SignIn() {
     }
     if (isSignIn){
       localStorage.setItem('isSignIn', 'false')
+      context.setSign()
     }
   }, []);
 
@@ -30,10 +34,7 @@ function SignIn() {
 
     localStorage.setItem('account', JSON.stringify(newAccount))
     localStorage.setItem('isSignIn', 'true')
-  }
-
-  function Login(){
-
+    context.setSign()
   }
 
   function RenderContent(){
@@ -47,7 +48,10 @@ function SignIn() {
 
             <Link to={'/'}>
               <button className={`${isLogin ? 'bg-black' : 'bg-gray-300 cursor-not-allowed'} w-full h-10 mt-3 text-white rounded-lg`}
-                      onClick={() => localStorage.setItem('isSignIn', 'true')}>Log in</button>
+                      onClick={() => {
+                        localStorage.setItem('isSignIn', 'true')
+                        context.setSign()
+                      }}>Log in</button>
             </Link>
 
             <p className={'text-sm text-center underline underline-offset-4 mt-2'}>Forgot my password</p>

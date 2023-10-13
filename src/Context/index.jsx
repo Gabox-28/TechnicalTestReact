@@ -36,7 +36,11 @@ export const ShoppingCartProvider = ({children}) => {
   const [searchByCategory, setSearchByCategory] = useState(null)
 
   //
+  const [isSignIn, setIsSignIn] = useState(false)
 
+  function setSign(){
+    setIsSignIn(JSON.parse(localStorage.getItem('isSignIn')))
+  }
 
   useEffect(() => {
     fetch('https://api.escuelajs.co/api/v1/products')
@@ -100,7 +104,8 @@ export const ShoppingCartProvider = ({children}) => {
       filteredItems,
       searchByCategory,
       setSearchByCategory,
-
+      isSignIn,
+      setSign
     }}>
       {children}
     </ShoppingCartContext.Provider>
